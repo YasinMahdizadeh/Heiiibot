@@ -10,3 +10,4 @@ def get_url(url):
     return content
 
 print(get_url(bot_url))
+#Is this the code we really want?

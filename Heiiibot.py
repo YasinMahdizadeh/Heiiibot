@@ -43,6 +43,10 @@ def get_last_chat_id_and_text(updates):
 def send_message(text, chat_id):
     url = bot_url + "sendMessage?text={}&chat_id={}".format(text, chat_id)
     get_url(url)
+
+#this part of code helps us to run this code continusely, instead of one-time
+#Running by terminal!
+
 def main():
     last_textchat = (None,None)
     while True:
@@ -54,15 +58,7 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
-'''
-print(get_updates())
-text, chat = get_last_chat_id_and_text(get_updates())
-send_message(text ,chat)
-updates = get_updates()
-'''
 
-
-#print ( updates["result"][0]["message"]["text"])
-#and it's how it works...
-#Is this the code we really want?
+##but what if two persons send same messages? previous method ignored the second
+#one. we use update-id for get_updates() . update-id is incremental and
+#we can offset chat-id numbers.

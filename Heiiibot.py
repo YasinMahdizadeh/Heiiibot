@@ -28,8 +28,10 @@ def get_json_from_url(url):
     js = json.loads( content )
     return js
 
-def get_updates():
+def get_updates(offset=None):
     url = bot_url + 'getupdates'
+    if offset:
+        url += "?offset={}".format(offset)
     js = get_json_from_url(url)
     return js
 
@@ -43,6 +45,14 @@ def get_last_chat_id_and_text(updates):
 def send_message(text, chat_id):
     url = bot_url + "sendMessage?text={}&chat_id={}".format(text, chat_id)
     get_url(url)
+
+#?!?!
+def get_last_update_id(updates):
+    update_ids = []
+    for i in updates['result']:
+        update_ids.append(int(i["update_id"]))
+    return max(update_ids)
+
 
 #this part of code helps us to run this code continusely, instead of one-time
 #Running by terminal!
@@ -58,6 +68,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+#print(get_updates())
 
 ##but what if two persons send same messages? previous method ignored the second
 #one. we use update-id for get_updates() . update-id is incremental and

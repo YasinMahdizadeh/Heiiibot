@@ -53,10 +53,24 @@ def get_last_update_id(updates):
         update_ids.append(int(i["update_id"]))
     return max(update_ids)
 
+def echo_all(updates):
+    for update in updates["result"]:
+        text = update["message"]["text"]
+        chat_id = update["message"]["chat"]["id"]
+        send_message(text, chat_id)
 
 #this part of code helps us to run this code continusely, instead of one-time
 #Running by terminal!
 
+def main():
+    last_chat_id = None
+    while True:
+        updates = get_updates(last_chat_id)
+        if (len(updates["result"]) > 0 ):
+            last_update_id = get_last_update_id(updates) + 1
+            echo_all(updates)
+        time.sleep(0.5)
+'''
 def main():
     last_textchat = (None,None)
     while True:
@@ -65,9 +79,9 @@ def main():
             send_message(text, chat)
             last_textchat = (text, chat)
         time.sleep(0.5)
-
-if __name__ == '__main__':
-    main()
+'''
+#if __name__ == '__main__':
+main()
 
 
 #print(get_updates())
